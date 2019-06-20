@@ -43,6 +43,7 @@ class _MeBottomTabState extends State<MeBottomTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       // body: _getTabs(availableTabs, allTabNames, allTabViews),
       body: DynamicTabs(

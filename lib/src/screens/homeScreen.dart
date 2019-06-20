@@ -4,22 +4,22 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:keka_bottombar/src/screens/bottomTabs/companyBottomTab.dart';
 import 'package:keka_bottombar/src/screens/bottomTabs/homeBottomTab.dart';
 import 'package:keka_bottombar/src/screens/bottomTabs/meBottomTab.dart';
-import 'package:keka_bottombar/src/widgets/employeeDirectoryShimmer.dart';
+import 'package:keka_bottombar/src/screens/bottomTabs/moreBottomTab.dart';
+import 'package:keka_bottombar/src/screens/bottomTabs/myTeamBottomTab.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
-
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  PageController _pageController;
+  PageController pageController;
   bool backPressed = false;
 
-  void _onItemTapped(int index) {
+  void onItemTapped(int index) {
     if (_selectedIndex != index) {
-      _pageController.jumpToPage(index);
+      pageController.jumpToPage(index);
       print(index);
     }
     setState(() {
@@ -30,13 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
+    pageController = PageController(initialPage: 0);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _pageController.dispose();
+    pageController.dispose();
   }
 
   @override
@@ -51,11 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   HomeBottomTab(),
                   MeBottomTab(),
-                  Icon(Icons.group),
+                  MyTeamBottomTab(),
                   CompanyBottomTab(),
-                  Icon(Icons.more_horiz),
+                  MoreBottomTab(),
                 ],
-                controller: _pageController,
+                controller: pageController,
               ),
             ),
           ],
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
+          onTap: onItemTapped,
           type: BottomNavigationBarType.fixed,
         ),
       ),
