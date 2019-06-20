@@ -1,8 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:keka_bottombar/src/screens/bottomTabs/companyBottomTab.dart';
+import 'package:keka_bottombar/src/screens/bottomTabs/homeBottomTab.dart';
 import 'package:keka_bottombar/src/screens/bottomTabs/meBottomTab.dart';
+import 'package:keka_bottombar/src/widgets/employeeDirectoryShimmer.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -47,10 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: PageView(
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  Icon(Icons.home),
+                  HomeBottomTab(),
                   MeBottomTab(),
                   Icon(Icons.group),
-                  Icon(Icons.business),
+                  CompanyBottomTab(),
                   Icon(Icons.more_horiz),
                 ],
                 controller: _pageController,

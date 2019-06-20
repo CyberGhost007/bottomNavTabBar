@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:keka_bottombar/src/widgets/customTabBar.dart';
+import 'package:keka_bottombar/src/widgets/dynamicTabs.dart';
 import 'package:keka_bottombar/src/widgets/gradientBar.dart';
 
 class MeBottomTab extends StatefulWidget {
@@ -12,15 +11,16 @@ class MeBottomTab extends StatefulWidget {
 class _MeBottomTabState extends State<MeBottomTab>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController tabController;
-
-  static const List<Tab> tabs = [
-    Tab(text: 'Time'),
-    Tab(text: 'Inbox'),
-    Tab(text: 'Feedback'),
-    Tab(text: 'Finances'),
-    Tab(text: 'Profile'),
+  List<String> availableTabs = ['Time', 'Inbox', 'Finances'];
+  List<String> allTabNames = [
+    'Time',
+    'Inbox',
+    'Feedback',
+    'Finances',
+    'Profile',
   ];
-  static const List<Widget> tabsViews = [
+
+  static List<Widget> allTabViews = [
     Center(child: Text('Tab 1')),
     Center(child: Text('Tab 2')),
     Center(child: Text('Tab 3')),
@@ -31,8 +31,8 @@ class _MeBottomTabState extends State<MeBottomTab>
   @override
   void initState() {
     super.initState();
-    tabController =
-        TabController(initialIndex: 0, length: tabs.length, vsync: this);
+    tabController = TabController(
+        initialIndex: 0, length: availableTabs.length, vsync: this);
   }
 
   @override
@@ -44,26 +44,73 @@ class _MeBottomTabState extends State<MeBottomTab>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          GradientBar(),
-          CustomTabBar(
-            tabs: tabs,
-            controller: tabController,
-            selectedColor: Colors.deepPurple[400],
-            unselectedColor: Colors.grey,
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: tabsViews,
-            ),
-          ),
-        ],
+      // body: _getTabs(availableTabs, allTabNames, allTabViews),
+      body: DynamicTabs(
+        allTabNames: allTabNames,
+        allTabViews: allTabViews,
+        availableTabs: availableTabs,
+        controller: tabController,
+        appBar: GradientBar(),
+        keepStateAlive: true,
       ),
     );
   }
 
   @override
   bool get wantKeepAlive => true;
+
+  // Widget _getTabs(
+  //   List<String> availableTabs,
+  //   List<String> allTabNames,
+  //   List<Widget> allTabViews,
+  // ) {
+  //   List<Tab> tabs = [];
+  //   List<Widget> tabViews = [];
+
+  //   for (String v in availableTabs) {
+  //     int index = allTabNames.indexOf(v);
+  //     if (v == allTabNames[index]) {
+  //       tabs.add(Tab(text: v));
+  //       int newIndex = allTabNames.indexOf(v);
+  //       tabViews.add(allTabViews[newIndex]);
+  //     } else if (v == allTabNames[index]) {
+  //       tabs.add(Tab(text: v));
+  //       int newIndex = allTabNames.indexOf(v);
+  //       tabViews.add(allTabViews[newIndex]);
+  //     } else if (v == allTabNames[index]) {
+  //       tabs.add(Tab(text: v));
+  //       int newIndex = allTabNames.indexOf(v);
+  //       tabViews.add(allTabViews[newIndex]);
+  //     } else if (v == allTabNames[index]) {
+  //       tabs.add(Tab(text: v));
+  //       int newIndex = allTabNames.indexOf(v);
+  //       tabViews.add(allTabViews[newIndex]);
+  //     } else if (v == allTabNames[index]) {
+  //       tabs.add(Tab(text: v));
+  //       int newIndex = allTabNames.indexOf(v);
+  //       tabViews.add(allTabViews[newIndex]);
+  //     }
+  //   }
+
+  //   return Container(
+  //     child: Column(
+  //       children: <Widget>[
+  //         GradientBar(),
+  //         CustomTabBar(
+  //           tabs: tabs,
+  //           controller: tabController,
+  //           selectedColor: Colors.deepPurple[400],
+  //           unselectedColor: Colors.grey,
+  //         ),
+  //         Expanded(
+  //           child: TabBarView(
+  //             controller: tabController,
+  //             children: tabViews,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  //   // return Container();
+  // }
 }
